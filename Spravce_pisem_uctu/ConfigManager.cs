@@ -23,9 +23,9 @@ namespace Spravce_pisem_uctu
             {
                 string r = radky[i].Trim();
                 if (r.Length == 0) { continue; }
-                if (r.StartsWith("#")) { continue; }
+                if (r.StartsWith("#")) { continue; } //timto se ignoruji hashtagy, aby se mohly psat komentare
 
-                int poz = r.IndexOf('=');
+                int poz = r.IndexOf('='); //zde zacina cesta
                 if (poz > 0)
                 {
                     string klic = r.Substring(0, poz).Trim();

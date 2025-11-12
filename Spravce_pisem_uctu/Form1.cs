@@ -154,7 +154,7 @@ namespace Spravce_pisem_uctu
         private void btnStartCasovac_Click(object sender, EventArgs e)
         {
             zbyvajiciSekundy = (int)numMinuty.Value * 60;
-            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy); // nastav cílový čas
+            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy); 
             timer.Start();
             AktualizujCasLabel();
             Log("Časovač spuštěn na " + numMinuty.Value + " min.");
