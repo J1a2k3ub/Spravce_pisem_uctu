@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36603.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spravce_pisem_uctu", "Spravce_pisem_uctu\Spravce_pisem_uctu.csproj", "{B4CDE0D8-5E1C-4752-8184-98B14CFA91A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4CDE0D8-5E1C-4752-8184-98B14CFA91A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CDE0D8-5E1C-4752-8184-98B14CFA91A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CDE0D8-5E1C-4752-8184-98B14CFA91A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CDE0D8-5E1C-4752-8184-98B14CFA91A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E68AA0CF-32B0-4C83-8468-5876C7EE3803}
+	EndGlobalSection
+EndGlobal
