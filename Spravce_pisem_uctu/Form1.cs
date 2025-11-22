@@ -20,7 +20,7 @@ namespace Spravce_pisem_uctu
         private string cestaConfig = "";
         private string cestaStudentsTxt = "";
         private int zbyvajiciSekundy = 0;
-        private DateTime casKonce; 
+        private DateTime casKonce;
 
         public Form1()
         {
@@ -84,7 +84,7 @@ namespace Spravce_pisem_uctu
                     listStudenti.Items.Add(studenti[i].ToString());
                 }
 
-                Log("Načteno studentů: " + studenti.Count + " ze souboru: " + cestaStudentsTxt);
+                Log("Načteno účtů: " + studenti.Count + " ze souboru: " + cestaStudentsTxt);
             }
         }
 
@@ -115,13 +115,14 @@ namespace Spravce_pisem_uctu
                 if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
 
                 string cil;
+                // NOVĚ: BASE\UCET\Prijmeni (např. D:\Studenti\P01\__Dolezal)
                 if (!string.IsNullOrEmpty(s.Ucet))
                 {
-                    cil = Path.Combine(zaklad, s.Ucet, "XX" + s.Prijmeni);
+                    cil = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
                 }
                 else
                 {
-                    cil = Path.Combine(zaklad, "XX" + s.Prijmeni);
+                    cil = Path.Combine(zaklad, s.Prijmeni);
                 }
 
                 try
@@ -154,7 +155,7 @@ namespace Spravce_pisem_uctu
         private void btnStartCasovac_Click(object sender, EventArgs e)
         {
             zbyvajiciSekundy = (int)numMinuty.Value * 60;
-            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy); 
+            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy);
             timer.Start();
             AktualizujCasLabel();
             Log("Časovač spuštěn na " + numMinuty.Value + " min.");

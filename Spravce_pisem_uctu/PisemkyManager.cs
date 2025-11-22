@@ -56,13 +56,16 @@ namespace Spravce_pisem_uctu
                 if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
 
                 string cilDir;
+                // NOVĚ: vytváříme adresář BASE\UCET\Prijmeni
+                // například: D:\Studenti\P01\__Dolezal
                 if (!string.IsNullOrEmpty(s.Ucet))
                 {
-                    cilDir = Path.Combine(cilovyZaklad, s.Ucet, "XX" + s.Prijmeni);
+                    cilDir = Path.Combine(cilovyZaklad, s.Ucet, s.Prijmeni);
                 }
                 else
                 {
-                    cilDir = Path.Combine(cilovyZaklad, "XX" + s.Prijmeni);
+                    // fallback, kdyby nebyl ucet
+                    cilDir = Path.Combine(cilovyZaklad, s.Prijmeni);
                 }
 
                 try
@@ -75,7 +78,10 @@ namespace Spravce_pisem_uctu
                     continue;
                 }
 
-                int indexVerze = i % this.VerzePisemek.Count; // A,B,C,A,B,C…
+                // Rozdělení verzí: index studenta % počet verzí
+                // Pokud máš verze A,B,C a studenty v pořadí P01,P02,P03,P04...
+                // dostanou: A,B,C,A,B,C,... – sousedi tedy nemají stejnou verzi.
+                int indexVerze = i % this.VerzePisemek.Count;
                 string zdrojSoubor = this.VerzePisemek[indexVerze];
                 string cilSoubor = Path.Combine(cilDir, Path.GetFileName(zdrojSoubor));
 
@@ -91,7 +97,7 @@ namespace Spravce_pisem_uctu
                 }
             }
 
-            log("Hotovo. Zadaní zkopírováno u " + pocet + " studentů.");
+            log("Hotovo. Zadaní zkopírováno u " + pocet + " účtů.");
         }
     }
 }
