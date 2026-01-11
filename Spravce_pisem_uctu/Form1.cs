@@ -115,7 +115,7 @@ namespace Spravce_pisem_uctu
                 if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
 
                 string cil;
-                // NOVĚ: BASE\UCET\Prijmeni (např. D:\Studenti\P01\__Dolezal)
+                
                 if (!string.IsNullOrEmpty(s.Ucet))
                 {
                     cil = Path.Combine(zaklad, s.Ucet, s.Prijmeni);

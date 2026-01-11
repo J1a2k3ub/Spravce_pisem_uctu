@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Spravce_pisem_uctu
 {
     internal class PisemkyManager
@@ -56,15 +57,12 @@ namespace Spravce_pisem_uctu
                 if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
 
                 string cilDir;
-                // NOVĚ: vytváříme adresář BASE\UCET\Prijmeni
-                // například: D:\Studenti\P01\__Dolezal
                 if (!string.IsNullOrEmpty(s.Ucet))
                 {
                     cilDir = Path.Combine(cilovyZaklad, s.Ucet, s.Prijmeni);
                 }
                 else
                 {
-                    // fallback, kdyby nebyl ucet
                     cilDir = Path.Combine(cilovyZaklad, s.Prijmeni);
                 }
 
@@ -73,14 +71,11 @@ namespace Spravce_pisem_uctu
                     Directory.CreateDirectory(cilDir);
                 }
                 catch (Exception ex)
-                {
+                {   
                     log("Chyba při vytváření složky: " + cilDir + " – " + ex.Message);
                     continue;
                 }
 
-                // Rozdělení verzí: index studenta % počet verzí
-                // Pokud máš verze A,B,C a studenty v pořadí P01,P02,P03,P04...
-                // dostanou: A,B,C,A,B,C,... – sousedi tedy nemají stejnou verzi.
                 int indexVerze = i % this.VerzePisemek.Count;
                 string zdrojSoubor = this.VerzePisemek[indexVerze];
                 string cilSoubor = Path.Combine(cilDir, Path.GetFileName(zdrojSoubor));

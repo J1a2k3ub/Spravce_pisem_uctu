@@ -23,11 +23,6 @@ namespace Spravce_pisem_uctu
                 if (r.Length == 0) { continue; }
                 if (r.StartsWith("#")) { continue; }
 
-                // NOVĚ:
-                // Očekáváme formát: P01;__Dolezal
-                //  casti[0] = ucet (P01)
-                //  casti[1] = "jméno/adresář" (__Dolezal)
-
                 string ucet = "";
                 string prijmeni = "";
 
@@ -35,16 +30,10 @@ namespace Spravce_pisem_uctu
                 if (casti.Length >= 1) { ucet = casti[0].Trim(); }
                 if (casti.Length >= 2) { prijmeni = casti[1].Trim(); }
 
-                // Student(prijmeni, ucet)
-                // tedy napr. Student("__Dolezal", "P01")
                 Student s = new Student(prijmeni, ucet);
                 vysledek.Add(s);
             }
 
-            // POZOR:
-            // Program předpokládá, že soubor je napsaný v pořadí sezení:
-            // P01 v prvním řádku, P02 v druhém, P03 ve třetím atd.
-            // Tím pádem index v seznamu odpovídá "sousedům" (1,2,3,...)
 
             return vysledek;
         }
