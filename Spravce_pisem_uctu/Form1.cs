@@ -42,124 +42,7 @@ namespace Spravce_pisem_uctu
             }
         }
 
-        private void btnNacistPisemky_Click(object sender, EventArgs e)
-        {
-            string slozka = cfg.Get("CESTA_PISEMKY", "");
-            if (string.IsNullOrEmpty(slozka))
-            {
-                Log("CESTA_PISEMKY není v configu nastavena.");
-                return;
-            }
-            if (!Directory.Exists(slozka))
-            {
-                Log("Složka s písemkami neexistuje: " + slozka);
-                return;
-            }
-
-            pisemky.NactiPisemky(slozka);
-
-            listPisemky.Items.Clear();
-            for (int i = 0; i < pisemky.VerzePisemek.Count; i++)
-            {
-                string nazev = Path.GetFileName(pisemky.VerzePisemek[i]);
-                listPisemky.Items.Add(nazev);
-            }
-
-            Log("Načteno verzí písemek: " + pisemky.VerzePisemek.Count);
-        }
-
-        private void btnNacistStudenty_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Vyberte students.txt";
-            ofd.Filter = "Textové soubory (*.txt)|*.txt|Všechny soubory (*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                cestaStudentsTxt = ofd.FileName;
-                studenti = StudentsLoader.NactiStudenty(cestaStudentsTxt);
-
-                listStudenti.Items.Clear();
-                for (int i = 0; i < studenti.Count; i++)
-                {
-                    listStudenti.Items.Add(studenti[i].ToString());
-                }
-
-                Log("Načteno účtů: " + studenti.Count + " ze souboru: " + cestaStudentsTxt);
-            }
-        }
-
-        private void btnVytvoritAdresare_Click(object sender, EventArgs e)
-        {
-            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
-            if (string.IsNullOrEmpty(zaklad))
-            {
-                Log("CESTA_STUDENTI_BASE není v configu nastavena.");
-                return;
-            }
-            if (!Directory.Exists(zaklad))
-            {
-                Log("Složka se studentskými účty neexistuje: " + zaklad);
-                return;
-            }
-            if (studenti == null || studenti.Count == 0)
-            {
-                Log("Nejprve načtěte studenty.");
-                return;
-            }
-
-            int pocitadlo = 0;
-            for (int i = 0; i < studenti.Count; i++)
-            {
-                Student s = studenti[i];
-                if (s == null) { continue; }
-                if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
-
-                string cil;
-                
-                if (!string.IsNullOrEmpty(s.Ucet))
-                {
-                    cil = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
-                }
-                else
-                {
-                    cil = Path.Combine(zaklad, s.Prijmeni);
-                }
-
-                try
-                {
-                    Directory.CreateDirectory(cil);
-                    pocitadlo = pocitadlo + 1;
-                    Log("Vytvořen adresář: " + cil);
-                }
-                catch (Exception ex)
-                {
-                    Log("Chyba při vytváření: " + cil + " – " + ex.Message);
-                }
-            }
-
-            Log("Hotovo. Vytvořeno adresářů: " + pocitadlo);
-        }
-
-        private void btnKopirovatZadani_Click(object sender, EventArgs e)
-        {
-            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
-            if (string.IsNullOrEmpty(zaklad) || !Directory.Exists(zaklad))
-            {
-                Log("Chybná cesta CESTA_STUDENTI_BASE v configu.");
-                return;
-            }
-
-            pisemky.KopirujZadaniStudentum(studenti, zaklad, Log);
-        }
-
-        private void btnStartCasovac_Click(object sender, EventArgs e)
-        {
-            zbyvajiciSekundy = (int)numMinuty.Value * 60;
-            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy);
-            timer.Start();
-            AktualizujCasLabel();
-            Log("Časovač spuštěn na " + numMinuty.Value + " min.");
-        }
+       
 
         private void btnPlus5_Click(object sender, EventArgs e)
         {
@@ -199,12 +82,127 @@ namespace Spravce_pisem_uctu
 
         private void btnPlus5_Click_1(object sender, EventArgs e)
         {
-
+            casKonce = casKonce.AddMinutes(5);
+            Log("Přidáno +5 minut.");
         }
 
         private void btnNacistStudenty_Click_1(object sender, EventArgs e)
         {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Vyberte students.txt";
+            ofd.Filter = "Textové soubory (*.txt)|*.txt|Všechny soubory (*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                cestaStudentsTxt = ofd.FileName;
+                studenti = StudentsLoader.NactiStudenty(cestaStudentsTxt);
 
+                listStudenti.Items.Clear();
+                for (int i = 0; i < studenti.Count; i++)
+                {
+                    listStudenti.Items.Add(studenti[i].ToString());
+                }
+
+                Log("Načteno účtů: " + studenti.Count + " ze souboru: " + cestaStudentsTxt);
+            }
+        }
+
+        private void btnNacistPisemky_Click_1(object sender, EventArgs e)
+        {
+            string slozka = cfg.Get("CESTA_PISEMKY", "");
+            if (string.IsNullOrEmpty(slozka))
+            {
+                Log("CESTA_PISEMKY není v configu nastavena.");
+                return;
+            }
+            if (!Directory.Exists(slozka))
+            {
+                Log("Složka s písemkami neexistuje: " + slozka);
+                return;
+            }
+
+            pisemky.NactiPisemky(slozka);
+
+            listPisemky.Items.Clear();
+            for (int i = 0; i < pisemky.VerzePisemek.Count; i++)
+            {
+                string nazev = Path.GetFileName(pisemky.VerzePisemek[i]);
+                listPisemky.Items.Add(nazev);
+            }
+
+            Log("Načteno verzí písemek: " + pisemky.VerzePisemek.Count);
+        }
+
+        private void btnStartCasovac_Click_1(object sender, EventArgs e)
+        {
+            zbyvajiciSekundy = (int)numMinuty.Value * 60;
+            casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy);
+            timer.Start();
+            AktualizujCasLabel();
+            Log("Časovač spuštěn na " + numMinuty.Value + " min.");
+        }
+
+        private void btnVytvoritAdresare_Click_1(object sender, EventArgs e)
+        {
+            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
+            if (string.IsNullOrEmpty(zaklad))
+            {
+                Log("CESTA_STUDENTI_BASE není v configu nastavena.");
+                return;
+            }
+            if (!Directory.Exists(zaklad))
+            {
+                Log("Složka se studentskými účty neexistuje: " + zaklad);
+                return;
+            }
+            if (studenti == null || studenti.Count == 0)
+            {
+                Log("Nejprve načtěte studenty.");
+                return;
+            }
+
+            int pocitadlo = 0;
+            for (int i = 0; i < studenti.Count; i++)
+            {
+                Student s = studenti[i];
+                if (s == null) { continue; }
+                if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
+
+                string cil;
+
+                if (!string.IsNullOrEmpty(s.Ucet))
+                {
+                    cil = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
+                }
+                else
+                {
+                    cil = Path.Combine(zaklad, s.Prijmeni);
+                }
+
+                try
+                {
+                    Directory.CreateDirectory(cil);
+                    pocitadlo = pocitadlo + 1;
+                    Log("Vytvořen adresář: " + cil);
+                }
+                catch (Exception ex)
+                {
+                    Log("Chyba při vytváření: " + cil + " – " + ex.Message);
+                }
+            }
+
+            Log("Hotovo. Vytvořeno adresářů: " + pocitadlo);
+        }
+
+        private void btnKopirovatZadani_Click_1(object sender, EventArgs e)
+        {
+            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
+            if (string.IsNullOrEmpty(zaklad) || !Directory.Exists(zaklad))
+            {
+                Log("Chybná cesta CESTA_STUDENTI_BASE v configu.");
+                return;
+            }
+
+            pisemky.KopirujZadaniStudentum(studenti, zaklad, Log);
         }
     }
 }

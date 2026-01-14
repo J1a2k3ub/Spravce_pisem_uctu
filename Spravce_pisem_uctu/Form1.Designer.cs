@@ -128,6 +128,7 @@
             this.btnStartCasovac.TabIndex = 26;
             this.btnStartCasovac.Text = "Start časovače";
             this.btnStartCasovac.UseVisualStyleBackColor = false;
+            this.btnStartCasovac.Click += new System.EventHandler(this.btnStartCasovac_Click_1);
             // 
             // btnNacistPisemky
             // 
@@ -141,6 +142,7 @@
             this.btnNacistPisemky.TabIndex = 24;
             this.btnNacistPisemky.Text = "Nacti pisemky";
             this.btnNacistPisemky.UseVisualStyleBackColor = false;
+            this.btnNacistPisemky.Click += new System.EventHandler(this.btnNacistPisemky_Click_1);
             // 
             // btnNacistStudenty
             // 
@@ -168,6 +170,7 @@
             this.btnVytvoritAdresare.TabIndex = 27;
             this.btnVytvoritAdresare.Text = "Vytvořit adresáře";
             this.btnVytvoritAdresare.UseVisualStyleBackColor = false;
+            this.btnVytvoritAdresare.Click += new System.EventHandler(this.btnVytvoritAdresare_Click_1);
             // 
             // btnKopirovatZadani
             // 
@@ -181,6 +184,7 @@
             this.btnKopirovatZadani.TabIndex = 28;
             this.btnKopirovatZadani.Text = "Kopírovat zadání";
             this.btnKopirovatZadani.UseVisualStyleBackColor = false;
+            this.btnKopirovatZadani.Click += new System.EventHandler(this.btnKopirovatZadani_Click_1);
             // 
             // btnPlus5
             // 
