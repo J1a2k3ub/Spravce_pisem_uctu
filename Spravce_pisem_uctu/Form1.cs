@@ -196,5 +196,15 @@ namespace Spravce_pisem_uctu
                 Log("Konec času.");
             }
         }
+
+        private void btnPlus5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNacistStudenty_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
