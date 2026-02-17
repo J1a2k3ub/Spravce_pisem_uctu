@@ -1,24 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Spravce_pisem_uctu
 {
     public partial class Form1 : Form
     {
-        private ConfigManager cfg = new ConfigManager();
-        private PisemkyManager pisemky = new PisemkyManager();
-        private List<Student> studenti = new List<Student>();
+        public ConfigManager cfg = new ConfigManager();
+        public PisemkyManager pisemky = new PisemkyManager();
+        public List<Student> studenti = new List<Student>();
 
         private string cestaConfig = "";
-        private string cestaStudentsTxt = "";
         private int zbyvajiciSekundy = 0;
         private DateTime casKonce;
 
@@ -33,176 +26,133 @@ namespace Spravce_pisem_uctu
         {
             if (File.Exists(cestaConfig))
             {
-                Log("Načítám config.txt: " + cestaConfig);
+                Log("Načítám config...");
                 cfg.NactiConfig(cestaConfig);
             }
             else
             {
-                Log("config.txt nenalezen – vytvořte prosím soubor.");
+                Log("config.txt nenalezen!");
             }
         }
 
-       
-
-        private void btnPlus5_Click(object sender, EventArgs e)
+        private void btnAdmin_Click(object sender, EventArgs e)
         {
-            casKonce = casKonce.AddMinutes(5);
-            Log("Přidáno +5 minut.");
-        }
-    
-        private void AktualizujCasLabel()
-        {
-            int min = zbyvajiciSekundy / 60;
-            int sec = zbyvajiciSekundy % 60;
-            lblCas.Text = "Zbývá: " + min.ToString("00") + ":" + sec.ToString("00");
-        }
-        private void Log(string zprava)
-        {
-            string radek = DateTime.Now.ToString("HH:mm:ss") + " – " + zprava;
-            listLog.Items.Add(radek);
-            listLog.TopIndex = listLog.Items.Count - 1;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int nove = (int)(casKonce - DateTime.Now).TotalSeconds;
-            if (nove < 0) { nove = 0; }
-
-            zbyvajiciSekundy = nove;
-            AktualizujCasLabel();
-
-            if (zbyvajiciSekundy == 0)
+            if (studenti.Count == 0)
             {
-                timer.Stop();
-                System.Media.SystemSounds.Exclamation.Play();
-                MessageBox.Show("Konec času!", "Časovač", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Log("Konec času.");
+                MessageBox.Show("Nejdříve načtěte studenty.", "Pozor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-        }
-
-        private void btnPlus5_Click_1(object sender, EventArgs e)
-        {
-            casKonce = casKonce.AddMinutes(5);
-            Log("Přidáno +5 minut.");
+            Form3 adminOkno = new Form3(this.studenti, this.cfg, this.pisemky);
+            adminOkno.ShowDialog();
         }
 
         private void btnNacistStudenty_Click_1(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Vyberte students.txt";
-            ofd.Filter = "Textové soubory (*.txt)|*.txt|Všechny soubory (*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            DialogResult volba = MessageBox.Show(
+                 "ANO = Načíst soubor students.txt (Vygeneruje Pxx -> Zobrazí tlačítko na tvorbu složek)\n" +
+                 "NE = Načíst existující složky z disku (Studenti už mají složky -> Tlačítko se skryje)",
+                 "Režim načítání", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (volba == DialogResult.Cancel) return;
+
+            studenti.Clear();
+            if (volba == DialogResult.Yes)
             {
-                cestaStudentsTxt = ofd.FileName;
-                studenti = StudentsLoader.NactiStudenty(cestaStudentsTxt);
-
-                listStudenti.Items.Clear();
-                for (int i = 0; i < studenti.Count; i++)
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "Text|*.txt";
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    listStudenti.Items.Add(studenti[i].ToString());
-                }
+                    studenti = StudentsLoader.NactiStudentyZeSouboru(ofd.FileName);
+                    Log("Načten soubor: " + Path.GetFileName(ofd.FileName));
 
-                Log("Načteno účtů: " + studenti.Count + " ze souboru: " + cestaStudentsTxt);
+                    btnVytvoritAdresare.Visible = true;
+                }
             }
+            else
+            {
+                string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
+                studenti = StudentsLoader.NactiStudentyZeSlozky(zaklad);
+                Log("Naskenováno z disku.");
+
+                btnVytvoritAdresare.Visible = false;
+            }
+
+            listStudenti.Items.Clear();
+            foreach (var s in studenti) listStudenti.Items.Add(s.ToString());
+            Log($"Počet studentů: {studenti.Count}");
         }
 
         private void btnNacistPisemky_Click_1(object sender, EventArgs e)
         {
             string slozka = cfg.Get("CESTA_PISEMKY", "");
-            if (string.IsNullOrEmpty(slozka))
-            {
-                Log("CESTA_PISEMKY není v configu nastavena.");
-                return;
-            }
-            if (!Directory.Exists(slozka))
-            {
-                Log("Složka s písemkami neexistuje: " + slozka);
-                return;
-            }
-
             pisemky.NactiPisemky(slozka);
-
             listPisemky.Items.Clear();
-            for (int i = 0; i < pisemky.VerzePisemek.Count; i++)
-            {
-                string nazev = Path.GetFileName(pisemky.VerzePisemek[i]);
-                listPisemky.Items.Add(nazev);
-            }
+            foreach (var p in pisemky.VerzePisemek) listPisemky.Items.Add(Path.GetFileName(p));
+            Log($"Písemek: {pisemky.VerzePisemek.Count}");
+        }
 
-            Log("Načteno verzí písemek: " + pisemky.VerzePisemek.Count);
+        private void btnVytvoritAdresare_Click_1(object sender, EventArgs e)
+        {
+            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
+            if (string.IsNullOrEmpty(zaklad) || studenti.Count == 0) return;
+            if (!Directory.Exists(zaklad)) Directory.CreateDirectory(zaklad);
+
+            foreach (Student s in studenti)
+            {
+                string pDir = Path.Combine(zaklad, s.Ucet);
+                string sDir = Path.Combine(pDir, s.Prijmeni);
+                if (!Directory.Exists(pDir)) Directory.CreateDirectory(pDir);
+                if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+            }
+            Log("Adresáře vytvořeny.");
+        }
+
+        private void btnKopirovatZadani_Click_1(object sender, EventArgs e)
+        {
+            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
+            pisemky.KopirujZadaniStudentum(studenti, zaklad, Log);
         }
 
         private void btnStartCasovac_Click_1(object sender, EventArgs e)
         {
             zbyvajiciSekundy = (int)numMinuty.Value * 60;
             casKonce = DateTime.Now.AddSeconds(zbyvajiciSekundy);
+
             timer.Start();
-            AktualizujCasLabel();
-            Log("Časovač spuštěn na " + numMinuty.Value + " min.");
+            Log($"Start: {numMinuty.Value} min.");
         }
 
-        private void btnVytvoritAdresare_Click_1(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
-            if (string.IsNullOrEmpty(zaklad))
+            int nove = (int)(casKonce - DateTime.Now).TotalSeconds;
+            if (nove < 0) nove = 0;
+            zbyvajiciSekundy = nove;
+
+            lblCas.Text = $"Zbývá: {(zbyvajiciSekundy / 60):00}:{(zbyvajiciSekundy % 60):00}";
+
+            if (zbyvajiciSekundy == 0)
             {
-                Log("CESTA_STUDENTI_BASE není v configu nastavena.");
-                return;
+                timer.Stop();
+                System.Media.SystemSounds.Exclamation.Play();
+                MessageBox.Show("Konec času!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            if (!Directory.Exists(zaklad))
-            {
-                Log("Složka se studentskými účty neexistuje: " + zaklad);
-                return;
-            }
-            if (studenti == null || studenti.Count == 0)
-            {
-                Log("Nejprve načtěte studenty.");
-                return;
-            }
-
-            int pocitadlo = 0;
-            for (int i = 0; i < studenti.Count; i++)
-            {
-                Student s = studenti[i];
-                if (s == null) { continue; }
-                if (string.IsNullOrEmpty(s.Prijmeni)) { continue; }
-
-                string cil;
-
-                if (!string.IsNullOrEmpty(s.Ucet))
-                {
-                    cil = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
-                }
-                else
-                {
-                    cil = Path.Combine(zaklad, s.Prijmeni);
-                }
-
-                try
-                {
-                    Directory.CreateDirectory(cil);
-                    pocitadlo = pocitadlo + 1;
-                    Log("Vytvořen adresář: " + cil);
-                }
-                catch (Exception ex)
-                {
-                    Log("Chyba při vytváření: " + cil + " – " + ex.Message);
-                }
-            }
-
-            Log("Hotovo. Vytvořeno adresářů: " + pocitadlo);
         }
 
-        private void btnKopirovatZadani_Click_1(object sender, EventArgs e)
+        private void btnPlus5_Click_1(object sender, EventArgs e)
         {
-            string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
-            if (string.IsNullOrEmpty(zaklad) || !Directory.Exists(zaklad))
-            {
-                Log("Chybná cesta CESTA_STUDENTI_BASE v configu.");
-                return;
-            }
+            casKonce = casKonce.AddMinutes(5);
+            Log("+5 minut");
+        }
 
-            pisemky.KopirujZadaniStudentum(studenti, zaklad, Log);
+        private void btnPlus5_Click(object sender, EventArgs e)
+        {
+            btnPlus5_Click_1(sender, e);
+        }
+
+        private void Log(string zprava)
+        {
+            listLog.Items.Add($"{DateTime.Now:HH:mm} - {zprava}");
+            listLog.TopIndex = listLog.Items.Count - 1;
         }
     }
 }

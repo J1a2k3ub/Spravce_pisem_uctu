@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spravce_pisem_uctu
 {
-    internal class Student
+    public class Student
     {
-        public string Prijmeni;
-        public string Ucet;
+        public string Prijmeni { get; set; }
+        public string Ucet { get; set; } 
 
         public Student(string prijmeni, string ucet)
         {
@@ -21,7 +17,7 @@ namespace Spravce_pisem_uctu
         {
             if (!string.IsNullOrEmpty(Ucet))
             {
-                return Prijmeni + " (" + Ucet + ")";
+                return Ucet + " (" + Prijmeni + ")";
             }
             return Prijmeni;
         }

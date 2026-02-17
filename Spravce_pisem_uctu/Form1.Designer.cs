@@ -32,6 +32,7 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAdmin = new System.Windows.Forms.Button();
             this.lblCas = new System.Windows.Forms.Label();
             this.numMinuty = new System.Windows.Forms.NumericUpDown();
             this.btnStartCasovac = new System.Windows.Forms.Button();
@@ -66,17 +67,19 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.78862F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.21138F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(905, 492);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(929, 492);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 227F));
-            this.tableLayoutPanel2.Controls.Add(this.lblCas, 3, 1);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
+            this.tableLayoutPanel2.Controls.Add(this.btnAdmin, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblCas, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.numMinuty, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnStartCasovac, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnNacistPisemky, 1, 0);
@@ -91,8 +94,22 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(895, 171);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(919, 171);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // btnAdmin
+            // 
+            this.btnAdmin.BackColor = System.Drawing.Color.MediumPurple;
+            this.btnAdmin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAdmin.Font = new System.Drawing.Font("Bahnschrift Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnAdmin.Location = new System.Drawing.Point(569, 90);
+            this.btnAdmin.Margin = new System.Windows.Forms.Padding(5);
+            this.btnAdmin.Name = "btnAdmin";
+            this.btnAdmin.Size = new System.Drawing.Size(151, 76);
+            this.btnAdmin.TabIndex = 35;
+            this.btnAdmin.Text = "Odevzdání";
+            this.btnAdmin.UseVisualStyleBackColor = false;
+            this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
             // 
             // lblCas
             // 
@@ -101,30 +118,30 @@
             this.lblCas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCas.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblCas.ForeColor = System.Drawing.Color.Red;
-            this.lblCas.Location = new System.Drawing.Point(671, 85);
+            this.lblCas.Location = new System.Drawing.Point(728, 0);
             this.lblCas.Name = "lblCas";
-            this.lblCas.Size = new System.Drawing.Size(221, 86);
-            this.lblCas.TabIndex = 31;
+            this.lblCas.Size = new System.Drawing.Size(188, 85);
+            this.lblCas.TabIndex = 34;
             this.lblCas.Text = "---";
             // 
             // numMinuty
             // 
             this.numMinuty.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.numMinuty.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numMinuty.Location = new System.Drawing.Point(671, 3);
+            this.numMinuty.Location = new System.Drawing.Point(567, 3);
             this.numMinuty.Name = "numMinuty";
-            this.numMinuty.Size = new System.Drawing.Size(221, 20);
-            this.numMinuty.TabIndex = 30;
+            this.numMinuty.Size = new System.Drawing.Size(155, 20);
+            this.numMinuty.TabIndex = 33;
             // 
             // btnStartCasovac
             // 
             this.btnStartCasovac.BackColor = System.Drawing.Color.MediumPurple;
             this.btnStartCasovac.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnStartCasovac.Font = new System.Drawing.Font("Bahnschrift Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnStartCasovac.Location = new System.Drawing.Point(443, 5);
+            this.btnStartCasovac.Location = new System.Drawing.Point(355, 5);
             this.btnStartCasovac.Margin = new System.Windows.Forms.Padding(5);
             this.btnStartCasovac.Name = "btnStartCasovac";
-            this.btnStartCasovac.Size = new System.Drawing.Size(220, 75);
+            this.btnStartCasovac.Size = new System.Drawing.Size(204, 75);
             this.btnStartCasovac.TabIndex = 26;
             this.btnStartCasovac.Text = "Start časovače";
             this.btnStartCasovac.UseVisualStyleBackColor = false;
@@ -135,10 +152,10 @@
             this.btnNacistPisemky.BackColor = System.Drawing.Color.MediumPurple;
             this.btnNacistPisemky.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNacistPisemky.Font = new System.Drawing.Font("Bahnschrift Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnNacistPisemky.Location = new System.Drawing.Point(224, 5);
+            this.btnNacistPisemky.Location = new System.Drawing.Point(180, 5);
             this.btnNacistPisemky.Margin = new System.Windows.Forms.Padding(5);
             this.btnNacistPisemky.Name = "btnNacistPisemky";
-            this.btnNacistPisemky.Size = new System.Drawing.Size(209, 75);
+            this.btnNacistPisemky.Size = new System.Drawing.Size(165, 75);
             this.btnNacistPisemky.TabIndex = 24;
             this.btnNacistPisemky.Text = "Nacti pisemky";
             this.btnNacistPisemky.UseVisualStyleBackColor = false;
@@ -152,7 +169,7 @@
             this.btnNacistStudenty.Location = new System.Drawing.Point(5, 5);
             this.btnNacistStudenty.Margin = new System.Windows.Forms.Padding(5);
             this.btnNacistStudenty.Name = "btnNacistStudenty";
-            this.btnNacistStudenty.Size = new System.Drawing.Size(209, 75);
+            this.btnNacistStudenty.Size = new System.Drawing.Size(165, 75);
             this.btnNacistStudenty.TabIndex = 23;
             this.btnNacistStudenty.Text = "Nacti studenty";
             this.btnNacistStudenty.UseVisualStyleBackColor = false;
@@ -166,7 +183,7 @@
             this.btnVytvoritAdresare.Location = new System.Drawing.Point(5, 90);
             this.btnVytvoritAdresare.Margin = new System.Windows.Forms.Padding(5);
             this.btnVytvoritAdresare.Name = "btnVytvoritAdresare";
-            this.btnVytvoritAdresare.Size = new System.Drawing.Size(209, 76);
+            this.btnVytvoritAdresare.Size = new System.Drawing.Size(165, 76);
             this.btnVytvoritAdresare.TabIndex = 27;
             this.btnVytvoritAdresare.Text = "Vytvořit adresáře";
             this.btnVytvoritAdresare.UseVisualStyleBackColor = false;
@@ -177,10 +194,10 @@
             this.btnKopirovatZadani.BackColor = System.Drawing.Color.MediumPurple;
             this.btnKopirovatZadani.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnKopirovatZadani.Font = new System.Drawing.Font("Bahnschrift Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnKopirovatZadani.Location = new System.Drawing.Point(224, 90);
+            this.btnKopirovatZadani.Location = new System.Drawing.Point(180, 90);
             this.btnKopirovatZadani.Margin = new System.Windows.Forms.Padding(5);
             this.btnKopirovatZadani.Name = "btnKopirovatZadani";
-            this.btnKopirovatZadani.Size = new System.Drawing.Size(209, 76);
+            this.btnKopirovatZadani.Size = new System.Drawing.Size(165, 76);
             this.btnKopirovatZadani.TabIndex = 28;
             this.btnKopirovatZadani.Text = "Kopírovat zadání";
             this.btnKopirovatZadani.UseVisualStyleBackColor = false;
@@ -191,10 +208,10 @@
             this.btnPlus5.BackColor = System.Drawing.Color.MediumPurple;
             this.btnPlus5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPlus5.Font = new System.Drawing.Font("Bahnschrift Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnPlus5.Location = new System.Drawing.Point(443, 90);
+            this.btnPlus5.Location = new System.Drawing.Point(355, 90);
             this.btnPlus5.Margin = new System.Windows.Forms.Padding(5);
             this.btnPlus5.Name = "btnPlus5";
-            this.btnPlus5.Size = new System.Drawing.Size(220, 76);
+            this.btnPlus5.Size = new System.Drawing.Size(204, 76);
             this.btnPlus5.TabIndex = 29;
             this.btnPlus5.Text = "+ 5 minut";
             this.btnPlus5.UseVisualStyleBackColor = false;
@@ -214,7 +231,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(899, 305);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(923, 305);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // listStudenti
@@ -225,7 +242,7 @@
             this.listStudenti.ForeColor = System.Drawing.Color.LawnGreen;
             this.listStudenti.FormattingEnabled = true;
             this.listStudenti.ItemHeight = 15;
-            this.listStudenti.Location = new System.Drawing.Point(677, 3);
+            this.listStudenti.Location = new System.Drawing.Point(701, 3);
             this.listStudenti.Name = "listStudenti";
             this.listStudenti.Size = new System.Drawing.Size(219, 299);
             this.listStudenti.TabIndex = 10;
@@ -238,9 +255,9 @@
             this.listPisemky.ForeColor = System.Drawing.Color.LawnGreen;
             this.listPisemky.FormattingEnabled = true;
             this.listPisemky.ItemHeight = 15;
-            this.listPisemky.Location = new System.Drawing.Point(437, 3);
+            this.listPisemky.Location = new System.Drawing.Point(452, 3);
             this.listPisemky.Name = "listPisemky";
-            this.listPisemky.Size = new System.Drawing.Size(234, 299);
+            this.listPisemky.Size = new System.Drawing.Size(243, 299);
             this.listPisemky.TabIndex = 9;
             // 
             // listLog
@@ -253,7 +270,7 @@
             this.listLog.ItemHeight = 15;
             this.listLog.Location = new System.Drawing.Point(3, 3);
             this.listLog.Name = "listLog";
-            this.listLog.Size = new System.Drawing.Size(428, 299);
+            this.listLog.Size = new System.Drawing.Size(443, 299);
             this.listLog.TabIndex = 7;
             // 
             // Form1
@@ -261,7 +278,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Linen;
-            this.ClientSize = new System.Drawing.Size(905, 492);
+            this.ClientSize = new System.Drawing.Size(929, 492);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.Color.Snow;
             this.MinimumSize = new System.Drawing.Size(921, 531);
@@ -287,11 +304,12 @@
         private System.Windows.Forms.Button btnKopirovatZadani;
         private System.Windows.Forms.Button btnPlus5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.NumericUpDown numMinuty;
         private System.Windows.Forms.ListBox listLog;
         private System.Windows.Forms.ListBox listPisemky;
         private System.Windows.Forms.ListBox listStudenti;
         private System.Windows.Forms.Label lblCas;
+        private System.Windows.Forms.NumericUpDown numMinuty;
+        private System.Windows.Forms.Button btnAdmin;
     }
 }
 
