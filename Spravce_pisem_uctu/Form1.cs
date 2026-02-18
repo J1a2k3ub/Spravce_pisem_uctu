@@ -7,6 +7,7 @@ namespace Spravce_pisem_uctu
 {
     public partial class Form1 : Form
     {
+        // tady si vytvarim instance tech mych pomocnych trid
         public ConfigManager cfg = new ConfigManager();
         public PisemkyManager pisemky = new PisemkyManager();
         public List<Student> studenti = new List<Student>();
@@ -18,6 +19,7 @@ namespace Spravce_pisem_uctu
         public Form1()
         {
             InitializeComponent();
+            // najdu kde lezi config.txt a nactu ho
             this.cestaConfig = Path.Combine(Application.StartupPath, "config.txt");
             this.NactiKonfiguraciPriStartu();
         }
@@ -35,6 +37,7 @@ namespace Spravce_pisem_uctu
             }
         }
 
+        // otevre druhe okno pro odevzdavani
         private void btnAdmin_Click(object sender, EventArgs e)
         {
             if (studenti.Count == 0)
@@ -42,10 +45,12 @@ namespace Spravce_pisem_uctu
                 MessageBox.Show("Nejdříve načtěte studenty.", "Pozor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // musim mu predat seznam studentu a managery aby s nima mohl pracovat
             Form3 adminOkno = new Form3(this.studenti, this.cfg, this.pisemky);
             adminOkno.ShowDialog();
         }
 
+        // nacte studenty bud ze souboru nebo ze slozek
         private void btnNacistStudenty_Click_1(object sender, EventArgs e)
         {
             DialogResult volba = MessageBox.Show(
@@ -58,6 +63,7 @@ namespace Spravce_pisem_uctu
             studenti.Clear();
             if (volba == DialogResult.Yes)
             {
+                // rezim soubor: otevre dialog pro vyber souboru
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Filter = "Text|*.txt";
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -65,18 +71,22 @@ namespace Spravce_pisem_uctu
                     studenti = StudentsLoader.NactiStudentyZeSouboru(ofd.FileName);
                     Log("Načten soubor: " + Path.GetFileName(ofd.FileName));
 
+                    // zobrazim tlacitko na vytvoreni slozek protoze jeste nejsou
                     btnVytvoritAdresare.Visible = true;
                 }
             }
             else
             {
+                // rezim disk: proskenuje slozky Pxx
                 string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
                 studenti = StudentsLoader.NactiStudentyZeSlozky(zaklad);
                 Log("Naskenováno z disku.");
 
+                // skryju tlacitko protoze slozky uz jsou hotove
                 btnVytvoritAdresare.Visible = false;
             }
 
+            // vypisu studenty do listboxu na obrazovce
             listStudenti.Items.Clear();
             foreach (var s in studenti) listStudenti.Items.Add(s.ToString());
             Log($"Počet studentů: {studenti.Count}");
@@ -91,6 +101,7 @@ namespace Spravce_pisem_uctu
             Log($"Písemek: {pisemky.VerzePisemek.Count}");
         }
 
+        // fyzicky vytvori slozky P01/__Novak na disku
         private void btnVytvoritAdresare_Click_1(object sender, EventArgs e)
         {
             string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
@@ -113,6 +124,7 @@ namespace Spravce_pisem_uctu
             pisemky.KopirujZadaniStudentum(studenti, zaklad, Log);
         }
 
+        // spusti odpocet
         private void btnStartCasovac_Click_1(object sender, EventArgs e)
         {
             zbyvajiciSekundy = (int)numMinuty.Value * 60;
@@ -122,12 +134,14 @@ namespace Spravce_pisem_uctu
             Log($"Start: {numMinuty.Value} min.");
         }
 
+        // tohle se deje kazdou sekundu
         private void timer1_Tick(object sender, EventArgs e)
         {
             int nove = (int)(casKonce - DateTime.Now).TotalSeconds;
             if (nove < 0) nove = 0;
             zbyvajiciSekundy = nove;
 
+            // vypise cas ve formatu MM:SS
             lblCas.Text = $"Zbývá: {(zbyvajiciSekundy / 60):00}:{(zbyvajiciSekundy % 60):00}";
 
             if (zbyvajiciSekundy == 0)
@@ -149,6 +163,7 @@ namespace Spravce_pisem_uctu
             btnPlus5_Click_1(sender, e);
         }
 
+        // pomocna metoda pro vypisovani zprav do listboxu
         private void Log(string zprava)
         {
             listLog.Items.Add($"{DateTime.Now:HH:mm} - {zprava}");

@@ -10,15 +10,18 @@ namespace Spravce_pisem_uctu
     {
         public List<string> VerzePisemek = new List<string>();
 
+        // nacte cesty k souborum se zadanim do seznamu
         public void NactiPisemky(string slozka)
         {
             VerzePisemek.Clear();
             if (Directory.Exists(slozka)) VerzePisemek.AddRange(Directory.GetFiles(slozka));
         }
 
+        // rozdava zadani studentum a strida verze A, B, C...
         public void KopirujZadaniStudentum(List<Student> studenti, string zaklad, Action<string> log)
         {
             if (VerzePisemek.Count == 0) { log("Žádná zadání!"); return; }
+            // seradim studenty podle uctu at to jde poporade
             var serazeni = studenti.OrderBy(s => s.Ucet).ToList();
 
             for (int i = 0; i < serazeni.Count; i++)
@@ -27,6 +30,7 @@ namespace Spravce_pisem_uctu
                 string cesta = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
                 if (!Directory.Exists(cesta)) Directory.CreateDirectory(cesta);
 
+                // modulo % zajisti stridani verzi porad dokola 0, 1, 2, 0, 1...
                 string verze = VerzePisemek[i % VerzePisemek.Count];
                 try
                 {
@@ -37,6 +41,7 @@ namespace Spravce_pisem_uctu
             }
         }
 
+        // posbira vsechny soubory od studentu k uciteli
         public void SebratPisemky(List<Student> studenti, string zaklad, string cil, Action<string> log)
         {
             if (!Directory.Exists(cil)) Directory.CreateDirectory(cil);
@@ -46,10 +51,12 @@ namespace Spravce_pisem_uctu
                 string zdroj = Path.Combine(zaklad, s.Ucet, s.Prijmeni);
                 if (!Directory.Exists(zdroj)) continue;
 
+                // u ucitele vytvorim slozku P01_Novak (bez tech podtrzik)
                 string nazev = $"{s.Ucet}_{s.Prijmeni.Replace("__", "")}";
                 string cilDir = Path.Combine(cil, nazev);
                 Directory.CreateDirectory(cilDir);
 
+                // zkopiruju vsechno co tam je
                 foreach (string f in Directory.GetFiles(zdroj))
                 {
                     try { File.Copy(f, Path.Combine(cilDir, Path.GetFileName(f)), true); } catch { }
@@ -57,6 +64,7 @@ namespace Spravce_pisem_uctu
             }
         }
 
+        // sbira jen vybrane soubory (.cs, .cpp nebo podle masky)
         public void VytvoritRedukovany(List<Student> studenti, string zaklad, string cil, string regexStr, Action<string> log)
         {
             if (!Directory.Exists(cil)) Directory.CreateDirectory(cil);
@@ -75,7 +83,8 @@ namespace Spravce_pisem_uctu
                 foreach (string f in Directory.GetFiles(zdroj))
                 {
                     string ext = Path.GetExtension(f).ToLower();
-                    
+
+                    // kontroluju jestli je to kod nebo jestli to sedi na regex masku
                     bool ok = (ext == ".cs" || ext == ".cpp");
                     if (regex != null && regex.IsMatch(Path.GetFileName(f))) ok = true;
 
@@ -88,6 +97,7 @@ namespace Spravce_pisem_uctu
             }
         }
 
+        // maze komplet celou slozku studenta __Novak, necha jen P01
         public void SmazatObsahUctu(List<Student> studenti, string zaklad, Action<string> log)
         {
             foreach (Student s in studenti)
@@ -98,6 +108,7 @@ namespace Spravce_pisem_uctu
                 {
                     try
                     {
+                        // smazu slozku i se vsim uvnitr (true = rekurzivne)
                         Directory.Delete(dir, true);
                         log($"Smazána složka: {s.Ucet}/{s.Prijmeni}");
                     }

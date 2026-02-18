@@ -10,6 +10,7 @@ namespace Spravce_pisem_uctu
         private ConfigManager cfg;
         private PisemkyManager pisemky;
 
+        // konstruktor - tady si prevezmu data z prvniho okna
         public Form3(List<Student> seznamStudentu, ConfigManager config, PisemkyManager manager)
         {
             InitializeComponent();
@@ -18,6 +19,7 @@ namespace Spravce_pisem_uctu
             this.pisemky = manager;
         }
 
+        // zkopiruje vsechno od studentu k uciteli
         private void btnOdevzdat_Click(object sender, EventArgs e)
         {
             string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
@@ -34,6 +36,7 @@ namespace Spravce_pisem_uctu
             MessageBox.Show($"Hotovo.\nPráce zkopírovány do:\n{cil}", "Odevzdáno", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // zkopiruje jen kody a veci co projdou filtrem (regex)
         private void btnRedukovany_Click(object sender, EventArgs e)
         {
             string zaklad = cfg.Get("CESTA_STUDENTI_BASE", "");
@@ -51,6 +54,7 @@ namespace Spravce_pisem_uctu
             MessageBox.Show($"Hotovo.\nSoubory (.cs, .cpp + filtr) jsou v:\n{cil}", "Redukováno", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // smaze vsechno ve slozkach studentu, necha jen prazdne Pxx
         private void btnSmazat_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show("Opravdu smazat obsah složek studentů?\nData budou ztracena!", "Varování", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);

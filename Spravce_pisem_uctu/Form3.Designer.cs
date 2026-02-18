@@ -44,7 +44,7 @@
             this.btnOdevzdat.Location = new System.Drawing.Point(10, 10);
             this.btnOdevzdat.Margin = new System.Windows.Forms.Padding(10);
             this.btnOdevzdat.Name = "btnOdevzdat";
-            this.btnOdevzdat.Size = new System.Drawing.Size(482, 28);
+            this.btnOdevzdat.Size = new System.Drawing.Size(361, 25);
             this.btnOdevzdat.TabIndex = 2;
             this.btnOdevzdat.Text = "Kopírovat práce";
             this.btnOdevzdat.UseVisualStyleBackColor = true;
@@ -53,10 +53,10 @@
             // btnRedukovany
             // 
             this.btnRedukovany.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRedukovany.Location = new System.Drawing.Point(10, 121);
+            this.btnRedukovany.Location = new System.Drawing.Point(10, 118);
             this.btnRedukovany.Margin = new System.Windows.Forms.Padding(10);
             this.btnRedukovany.Name = "btnRedukovany";
-            this.btnRedukovany.Size = new System.Drawing.Size(482, 28);
+            this.btnRedukovany.Size = new System.Drawing.Size(361, 25);
             this.btnRedukovany.TabIndex = 3;
             this.btnRedukovany.Text = "Vytvořit redukovaný";
             this.btnRedukovany.UseVisualStyleBackColor = true;
@@ -65,10 +65,10 @@
             // btnSmazat
             // 
             this.btnSmazat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSmazat.Location = new System.Drawing.Point(10, 169);
+            this.btnSmazat.Location = new System.Drawing.Point(10, 163);
             this.btnSmazat.Margin = new System.Windows.Forms.Padding(10);
             this.btnSmazat.Name = "btnSmazat";
-            this.btnSmazat.Size = new System.Drawing.Size(482, 28);
+            this.btnSmazat.Size = new System.Drawing.Size(361, 25);
             this.btnSmazat.TabIndex = 4;
             this.btnSmazat.Text = "Smazat práce studentů";
             this.btnSmazat.UseVisualStyleBackColor = true;
@@ -77,10 +77,10 @@
             // btnZpet
             // 
             this.btnZpet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnZpet.Location = new System.Drawing.Point(10, 217);
+            this.btnZpet.Location = new System.Drawing.Point(10, 208);
             this.btnZpet.Margin = new System.Windows.Forms.Padding(10);
             this.btnZpet.Name = "btnZpet";
-            this.btnZpet.Size = new System.Drawing.Size(482, 29);
+            this.btnZpet.Size = new System.Drawing.Size(361, 27);
             this.btnZpet.TabIndex = 5;
             this.btnZpet.Text = "Zpět";
             this.btnZpet.UseVisualStyleBackColor = true;
@@ -89,17 +89,17 @@
             // txtRegex
             // 
             this.txtRegex.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtRegex.Location = new System.Drawing.Point(10, 81);
+            this.txtRegex.Location = new System.Drawing.Point(10, 78);
             this.txtRegex.Margin = new System.Windows.Forms.Padding(10);
             this.txtRegex.Name = "txtRegex";
-            this.txtRegex.Size = new System.Drawing.Size(482, 20);
+            this.txtRegex.Size = new System.Drawing.Size(361, 20);
             this.txtRegex.TabIndex = 7;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 58);
+            this.label1.Location = new System.Drawing.Point(10, 55);
             this.label1.Margin = new System.Windows.Forms.Padding(10, 10, 0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
@@ -128,15 +128,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(502, 256);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(381, 245);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 256);
+            this.ClientSize = new System.Drawing.Size(381, 245);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(397, 284);
             this.Name = "Form3";
             this.Text = "Form3";
             this.tableLayoutPanel1.ResumeLayout(false);
